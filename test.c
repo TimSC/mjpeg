@@ -7,6 +7,7 @@
 
 void WritePPMImage(const char *fina, unsigned char *img, int height, int width)
 {
+	//TODO this only processes greyscale information at this time.
 	int i, j, cursor = 0;
 	FILE *fp = fopen(fina, "wb"); /* b - binary mode */
 	(void) fprintf(fp, "P6\n%d %d\n255\n", width, height);
