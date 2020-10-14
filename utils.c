@@ -418,8 +418,8 @@ int jpeg_decode(unsigned char **pic, unsigned char *buf, int *width,
     switch (dscans[0].hv) {
     case 0x22: // 411
     	mb=6;
-	mcusx = *width >> 4;
-	mcusy = *height >> 4;
+	mcusx = (intwidth % 16 == 0) ? (intwidth / 16) : (intwidth / 16) + 1;
+	mcusy = (intheight % 16 == 0) ? (intheight / 16) : (intheight / 16) + 1;
 	bpp=2;
 	xpitch = 16 * bpp;
 	pitch = *width * bpp; // YUYV out
@@ -429,8 +429,8 @@ int jpeg_decode(unsigned char **pic, unsigned char *buf, int *width,
     case 0x21: //422
    // printf("find 422 %dx%d\n",*width,*height);
     	mb=4;
-	mcusx = *width >> 4;
-	mcusy = *height >> 3;
+	mcusx = (intwidth % 16 == 0) ? (intwidth / 16) : (intwidth / 16) + 1;
+	mcusy = (intheight % 8 == 0) ? (intheight / 8) : (intheight / 8) + 1;
 	bpp=2;	
 	xpitch = 16 * bpp;
 	pitch = *width * bpp; // YUYV out
@@ -438,8 +438,8 @@ int jpeg_decode(unsigned char **pic, unsigned char *buf, int *width,
 	convert = yuv422pto422;	
 	break;
     case 0x11: //444
-	mcusx = *width >> 3;
-	mcusy = *height >> 3;
+	mcusx = (intwidth % 8 == 0) ? (intwidth / 8) : (intwidth / 8) + 1;
+	mcusy = (intheight % 8 == 0) ? (intheight / 8) : (intheight / 8) + 1;
 	bpp=2;
 	xpitch = 8 * bpp;
 	pitch = *width * bpp; // YUYV out
